@@ -15,7 +15,7 @@ type dataSelector struct {
 
 // DataCell 接口,用于各种资源list的类型的转换，转换后可以使用dataSelector的自定义排序方法
 type DataCell interface {
-	GetCreate() time.Time
+	GetCreation() time.Time
 	GetName() string
 }
 
@@ -47,8 +47,8 @@ func (d *dataSelector) Swap(i, j int) {
 }
 
 func (d *dataSelector) Less(i, j int) bool {
-	a := d.GenericDataList[i].GetCreate()
-	b := d.GenericDataList[j].GetCreate()
+	a := d.GenericDataList[i].GetCreation()
+	b := d.GenericDataList[j].GetCreation()
 
 	return b.Before(a)
 }
@@ -96,7 +96,7 @@ func (d *dataSelector) Paginate() *dataSelector {
 	}
 	//举例：25个元素的数组，limit是10，page是3，startIndex是20，endIndex是30（实际上endIndex是 25）
 	startIndex := limit * (page - 1)
-	endIndex := limit * page
+	endIndex := limit*page - 1
 	//处理最后一页，这时候就把endIndex由30改为25了
 	if len(d.GenericDataList) < endIndex {
 		endIndex = len(d.GenericDataList)
@@ -107,10 +107,6 @@ func (d *dataSelector) Paginate() *dataSelector {
 
 // 定义podCell类型，实现GetCreateion和GetName方法后，可进行类型转换
 type podCell corev1.Pod
-
-func (p podCell) GetCreate() time.Time {
-	return p.CreationTimestamp.Time
-}
 
 func (p podCell) GetCreation() time.Time {
 	return p.CreationTimestamp.Time
