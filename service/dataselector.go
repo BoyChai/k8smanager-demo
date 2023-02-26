@@ -61,7 +61,7 @@ func (d *dataSelector) Sort() *dataSelector {
 
 // 过滤
 
-// Filter方法用于过滤元素，比较元素的Name属性，若包含，再返回
+// Filter 方法用于过滤元素，比较元素的Name属性，若包含，再返回
 func (d *dataSelector) Filter() *dataSelector {
 	//若Name的传参为空，则返回所有元素
 	if d.dataSelectQuery.FilterQuery.Name == "" {
@@ -86,7 +86,7 @@ func (d *dataSelector) Filter() *dataSelector {
 
 // 分页
 
-// Paginate方法用于数组分页，根据Limit和Page的传参，返回数据
+// Paginate 方法用于数组分页，根据Limit和Page的传参，返回数据
 func (d *dataSelector) Paginate() *dataSelector {
 	limit := d.dataSelectQuery.PaginateQuery.Limit
 	page := d.dataSelectQuery.PaginateQuery.Page
