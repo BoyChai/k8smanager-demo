@@ -80,6 +80,11 @@ func (p *pod) GetPodDetail(podName, namespace string) (pod *corev1.Pod, err erro
 	return pod, nil
 }
 
+// CreatePod 创建pod
+//func (p *pod) CreatePod() {
+//K8s.ClientSet.CoreV1().Pods("").Create()
+//}
+
 // DeletePod 删除pod
 func (p *pod) DeletePod(podName, namespace string) (err error) {
 	err = K8s.ClientSet.CoreV1().Pods(namespace).Delete(context.TODO(), podName, matev1.DeleteOptions{})
