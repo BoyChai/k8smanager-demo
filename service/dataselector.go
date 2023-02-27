@@ -125,3 +125,13 @@ func (p deploymentCell) GetCreation() time.Time {
 func (p deploymentCell) GetName() string {
 	return p.Name
 }
+
+// 定义daemonSetCell类型，实现GetCreateion和GetName方法后，可以进行类型转换
+type daemonSetCell appv1.DaemonSet
+
+func (d daemonSetCell) GetCreation() time.Time {
+	return d.CreationTimestamp.Time
+}
+func (d daemonSetCell) GetName() string {
+	return d.Name
+}

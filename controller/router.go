@@ -29,5 +29,11 @@ func (r *router) InitApiRouter(router *gin.Engine) {
 		PUT("/api/k8s/deployment/restart", Deployment.RestartDeployment).
 		PUT("/api/k8s/deployment/update", Deployment.UpdateDeployment).
 		GET("/api/k8s/deployment/numnp", Deployment.GetDeployNumPerNp).
-		POST("/api/k8s/deployment/create", Deployment.CreateDeployment)
+		POST("/api/k8s/deployment/create", Deployment.CreateDeployment).
+		// daemonset资源
+		GET("/api/k8s/daemonsets", DaemonSet.GetDaemonSets).
+		GET("/api/k8s/daemonset/detail", DaemonSet.GetDaemonSetDetail).
+		DELETE("/api/k8s/daemonset/del", DaemonSet.DeleteDaemonSet).
+		PUT("/api/k8s/daemonset/update", DaemonSet.UpdateDaemonSet)
+
 }
