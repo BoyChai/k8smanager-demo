@@ -94,7 +94,7 @@ func (d *daemonSet) DeleteDaemonSet(ctx *gin.Context) {
 		})
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg":  "获取DaemonSet详细信息成功",
+		"msg":  "删除DaemonSet成功",
 		"data": nil,
 	})
 }
@@ -122,7 +122,7 @@ func (d *daemonSet) UpdateDaemonSet(ctx *gin.Context) {
 		})
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg":  "获取DaemonSet详细信息成功",
+		"msg":  "更新DaemonSet成功",
 		"data": nil,
 	})
 }
