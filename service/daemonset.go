@@ -71,7 +71,7 @@ func (d *daemonSet) DeleteDaemonSet(daemonSetName, namespace string) error {
 }
 
 // UpdateDaemonSet 更新DaemonSet
-func (d daemonSet) UpdateDaemonSet(namespace, content string) error {
+func (d *daemonSet) UpdateDaemonSet(namespace, content string) error {
 	var daemon = &appsv1.DaemonSet{}
 	err := json.Unmarshal([]byte(content), &daemon)
 	if err != nil {

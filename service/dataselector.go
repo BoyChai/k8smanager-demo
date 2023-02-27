@@ -135,3 +135,13 @@ func (d daemonSetCell) GetCreation() time.Time {
 func (d daemonSetCell) GetName() string {
 	return d.Name
 }
+
+// 定义statefulSetCell类型，实现GetCreateion和GetName方法后，可以进行类型转换
+type statefulSetCell appv1.StatefulSet
+
+func (s statefulSetCell) GetCreation() time.Time {
+	return s.CreationTimestamp.Time
+}
+func (s statefulSetCell) GetName() string {
+	return s.Name
+}

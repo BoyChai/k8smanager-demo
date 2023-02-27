@@ -34,6 +34,11 @@ func (r *router) InitApiRouter(router *gin.Engine) {
 		GET("/api/k8s/daemonsets", DaemonSet.GetDaemonSets).
 		GET("/api/k8s/daemonset/detail", DaemonSet.GetDaemonSetDetail).
 		DELETE("/api/k8s/daemonset/del", DaemonSet.DeleteDaemonSet).
-		PUT("/api/k8s/daemonset/update", DaemonSet.UpdateDaemonSet)
+		PUT("/api/k8s/daemonset/update", DaemonSet.UpdateDaemonSet).
+		// statefulset资源
+		GET("/api/k8s/statefulsets", StatefulSet.GetStatefulSets).
+		GET("/api/k8s/statefulset/detail", StatefulSet.GetStatefulSetDetail).
+		DELETE("/api/k8s/statefulset/del", StatefulSet.DeleteStatefulSet).
+		PUT("/api/k8s/statefulset/update", StatefulSet.UpdateStatefulSet)
 
 }
