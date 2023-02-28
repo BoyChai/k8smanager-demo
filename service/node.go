@@ -48,7 +48,7 @@ func (n *node) GetNodeDetail(nodeName string) (node *corev1.Node, err error) {
 	return nodeInfo, nil
 }
 
-// toCells方法用于将pod类型数组，转换成DataCell类型数组
+// toCells方法用于将node类型数组，转换成DataCell类型数组
 func (n *node) toCells(std []corev1.Node) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
@@ -57,11 +57,11 @@ func (n *node) toCells(std []corev1.Node) []DataCell {
 	return cells
 }
 
-// fromCells方法用于将DataCell类型数组，转换成pod类型数组
+// fromCells方法用于将DataCell类型数组，转换成node类型数组
 func (n *node) fromCells(cells []DataCell) []corev1.Node {
 	nodes := make([]corev1.Node, len(cells))
 	for i := range cells {
-		//cells[i].(podCell)就使用到了断言,断言后转换成了podCell类型，然后又转换成了Pod类型
+		//cells[i].(nodeCell)就使用到了断言,断言后转换成了nodeCell类型，然后又转换成了node类型
 		nodes[i] = corev1.Node(cells[i].(nodeCell))
 	}
 	return nodes

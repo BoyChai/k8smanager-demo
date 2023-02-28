@@ -95,11 +95,11 @@ func (s *statefulSet) toCells(std []appsv1.StatefulSet) []DataCell {
 	return cells
 }
 
-// fromCells方法用于将DataCell类型数组，转换成pod类型数组
+// fromCells方法用于将DataCell类型数组，转换成statefulSet类型数组
 func (s *statefulSet) fromCells(cells []DataCell) []appsv1.StatefulSet {
 	pods := make([]appsv1.StatefulSet, len(cells))
 	for i := range cells {
-		//cells[i].(podCell)就使用到了断言,断言后转换成了podCell类型，然后又转换成了Pod类型
+		//cells[i].(statefulSetCell)就使用到了断言,断言后转换成了statefulSetCell类型，然后又转换成了statefulSet类型
 		pods[i] = appsv1.StatefulSet(cells[i].(statefulSetCell))
 	}
 	return pods

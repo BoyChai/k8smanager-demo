@@ -53,13 +53,13 @@ func (n *namespace) GetNamespaceDetail(namespaceName string) (node *corev1.Names
 func (n *namespace) DeleteNamespace(namespaceName string) (err error) {
 	err = K8s.ClientSet.CoreV1().Namespaces().Delete(context.TODO(), namespaceName, v1.DeleteOptions{})
 	if err != nil {
-		fmt.Println("获取namespace详情错误", err.Error())
-		return errors.New("获取namespace详情错误" + err.Error())
+		fmt.Println("删除namespace错误", err.Error())
+		return errors.New("获取namespace错误" + err.Error())
 	}
 	return nil
 }
 
-// toCells方法用于将pod类型数组，转换成DataCell类型数组
+// toCells方法用于将namespace类型数组，转换成DataCell类型数组
 func (n *namespace) toCells(std []corev1.Namespace) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
@@ -68,11 +68,11 @@ func (n *namespace) toCells(std []corev1.Namespace) []DataCell {
 	return cells
 }
 
-// fromCells方法用于将DataCell类型数组，转换成pod类型数组
+// fromCells方法用于将DataCell类型数组，转换成namespace类型数组
 func (n *namespace) fromCells(cells []DataCell) []corev1.Namespace {
 	namespaces := make([]corev1.Namespace, len(cells))
 	for i := range cells {
-		//cells[i].(podCell)就使用到了断言,断言后转换成了podCell类型，然后又转换成了Pod类型
+		//cells[i].(namespaceCell)就使用到了断言,断言后转换成了namespaceCell类型，然后又转换成了namespace类型
 		namespaces[i] = corev1.Namespace(cells[i].(namespaceCell))
 	}
 	return namespaces
