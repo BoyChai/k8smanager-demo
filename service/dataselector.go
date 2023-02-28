@@ -155,3 +155,13 @@ func (n nodeCell) GetCreation() time.Time {
 func (n nodeCell) GetName() string {
 	return n.Name
 }
+
+// 定义namespace类型，实现GetCreateion和GetName方法后，可以进行类型转换
+type namespaceCell corev1.Namespace
+
+func (n namespaceCell) GetCreation() time.Time {
+	return n.CreationTimestamp.Time
+}
+func (n namespaceCell) GetName() string {
+	return n.Name
+}
