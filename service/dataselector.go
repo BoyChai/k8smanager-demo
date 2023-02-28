@@ -145,3 +145,13 @@ func (s statefulSetCell) GetCreation() time.Time {
 func (s statefulSetCell) GetName() string {
 	return s.Name
 }
+
+// 定义node类型，实现GetCreateion和GetName方法后，可以进行类型转换
+type nodeCell corev1.Node
+
+func (n nodeCell) GetCreation() time.Time {
+	return n.CreationTimestamp.Time
+}
+func (n nodeCell) GetName() string {
+	return n.Name
+}

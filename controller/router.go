@@ -39,6 +39,9 @@ func (r *router) InitApiRouter(router *gin.Engine) {
 		GET("/api/k8s/statefulsets", StatefulSet.GetStatefulSets).
 		GET("/api/k8s/statefulset/detail", StatefulSet.GetStatefulSetDetail).
 		DELETE("/api/k8s/statefulset/del", StatefulSet.DeleteStatefulSet).
-		PUT("/api/k8s/statefulset/update", StatefulSet.UpdateStatefulSet)
+		PUT("/api/k8s/statefulset/update", StatefulSet.UpdateStatefulSet).
+		// node资源
+		GET("/api/k8s/nodes", Node.GetNodes).
+		GET("/api/k8s/node/detail", Node.GetNodeDetail)
 
 }
