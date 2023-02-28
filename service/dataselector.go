@@ -165,3 +165,13 @@ func (n namespaceCell) GetCreation() time.Time {
 func (n namespaceCell) GetName() string {
 	return n.Name
 }
+
+// 定义PersistentVolume类型，实现GetCreateion和GetName方法后，可以进行类型转换
+type persistentVolumeCell corev1.PersistentVolume
+
+func (p persistentVolumeCell) GetCreation() time.Time {
+	return p.CreationTimestamp.Time
+}
+func (p persistentVolumeCell) GetName() string {
+	return p.Name
+}
