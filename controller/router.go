@@ -42,6 +42,13 @@ func (r *router) InitApiRouter(router *gin.Engine) {
 		PUT("/api/k8s/statefulset/update", StatefulSet.UpdateStatefulSet).
 		// node资源
 		GET("/api/k8s/nodes", Node.GetNodes).
-		GET("/api/k8s/node/detail", Node.GetNodeDetail)
-
+		GET("/api/k8s/node/detail", Node.GetNodeDetail).
+		// namespace资源
+		GET("/api/k8s/namespaces", Namespace.GetNamespaces).
+		GET("/api/k8s/namespace/detail", Namespace.GetNamespaceDetail).
+		DELETE("/api/k8s/namespace/del", Namespace.DeleteNamespace).
+		// pv资源
+		GET("/api/k8s/persistentvolumes", PersistentVolume.GetPersistentVolumes).
+		GET("/api/k8s/persistentvolume/detail", PersistentVolume.GetPersistentVolumeDetail).
+		DELETE("/api/k8s/persistentvolume/del", PersistentVolume.DeletePersistentVolume)
 }

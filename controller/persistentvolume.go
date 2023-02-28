@@ -12,8 +12,8 @@ var PersistentVolume persistentvolume
 type persistentvolume struct {
 }
 
-// GetPersistentVolume 获取pv列表
-func (p *persistentvolume) GetPersistentVolume(ctx *gin.Context) {
+// GetPersistentVolumes 获取pv列表
+func (p *persistentvolume) GetPersistentVolumes(ctx *gin.Context) {
 	// 处理入参
 	// 匿名结构体，用于定义入参，get请求为from格式，其他请求为json格式
 	params := new(struct {

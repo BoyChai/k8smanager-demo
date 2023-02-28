@@ -70,8 +70,8 @@ func (n *namespace) GetNamespaceDetail(ctx *gin.Context) {
 	})
 }
 
-// GetNamespace 删除namespace
-func (n *namespace) GetNamespace(ctx *gin.Context) {
+// DeleteNamespace 删除namespace
+func (n *namespace) DeleteNamespace(ctx *gin.Context) {
 	// 处理入参
 	// 匿名结构体，用于定义入参，get请求为from格式，其他请求为json格式
 	params := new(struct {
