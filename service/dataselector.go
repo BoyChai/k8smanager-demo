@@ -175,3 +175,13 @@ func (p persistentVolumeCell) GetCreation() time.Time {
 func (p persistentVolumeCell) GetName() string {
 	return p.Name
 }
+
+// 定义Service类型，实现serviceCell和GetName方法后，可以进行类型转换
+type serviceCell corev1.Service
+
+func (s serviceCell) GetCreation() time.Time {
+	return s.CreationTimestamp.Time
+}
+func (s serviceCell) GetName() string {
+	return s.Name
+}
