@@ -3,6 +3,7 @@ package service
 import (
 	appv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	networkv1 "k8s.io/api/networking/v1"
 	"sort"
 	"strings"
 	"time"
@@ -184,4 +185,14 @@ func (s serviceCell) GetCreation() time.Time {
 }
 func (s serviceCell) GetName() string {
 	return s.Name
+}
+
+// 定义ingress类型，实现ingressCell和GetName方法后，可以进行类型转换
+type ingressCell networkv1.Ingress
+
+func (i ingressCell) GetCreation() time.Time {
+	return i.CreationTimestamp.Time
+}
+func (i ingressCell) GetName() string {
+	return i.Name
 }
