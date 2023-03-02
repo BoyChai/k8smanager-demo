@@ -206,3 +206,13 @@ func (c configMapCell) GetCreation() time.Time {
 func (c configMapCell) GetName() string {
 	return c.Name
 }
+
+// 定义secretCell类型，实现GetCreation和GetName方法后，可以进行类型转换
+type secretCell corev1.Secret
+
+func (s secretCell) GetCreation() time.Time {
+	return s.CreationTimestamp.Time
+}
+func (s secretCell) GetName() string {
+	return s.Name
+}
