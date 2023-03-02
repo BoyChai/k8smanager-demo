@@ -50,5 +50,17 @@ func (r *router) InitApiRouter(router *gin.Engine) {
 		// pv资源
 		GET("/api/k8s/persistentvolumes", PersistentVolume.GetPersistentVolumes).
 		GET("/api/k8s/persistentvolume/detail", PersistentVolume.GetPersistentVolumeDetail).
-		DELETE("/api/k8s/persistentvolume/del", PersistentVolume.DeletePersistentVolume)
+		DELETE("/api/k8s/persistentvolume/del", PersistentVolume.DeletePersistentVolume).
+		// service
+		GET("/api/k8s/services", Service.GetServices).
+		GET("/api/k8s/service/detail", Service.GetServiceDetail).
+		PUT("/api/k8s/service/create", Service.CreateService).
+		DELETE("/api/k8s/service/delete", Service.DeleteService).
+		PUT("/api/k8s/service/update", Service.UpdateService).
+		// ingress
+		GET("/api/k8s/ingresss", Ingress.GetIngress).
+		GET("/api/k8s/ingress/detail", Ingress.GetIngressDetail).
+		PUT("/api/k8s/ingress/create", Ingress.CreateIngress).
+		DELETE("/api/k8s/ingress/delete", Ingress.DeleteIngress).
+		PUT("/api/k8s/ingress/update", Ingress.UpdateIngress)
 }
