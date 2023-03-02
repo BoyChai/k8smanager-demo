@@ -196,3 +196,13 @@ func (i ingressCell) GetCreation() time.Time {
 func (i ingressCell) GetName() string {
 	return i.Name
 }
+
+// 定义configMapCell类型，实现GetCreation和GetName方法后，可以进行类型转换
+type configMapCell corev1.ConfigMap
+
+func (c configMapCell) GetCreation() time.Time {
+	return c.CreationTimestamp.Time
+}
+func (c configMapCell) GetName() string {
+	return c.Name
+}
