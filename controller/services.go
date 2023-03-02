@@ -88,7 +88,7 @@ func (s *svc) CreateService(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg":  "创建service                                                                                                                                                  成功",
+		"msg":  "创建service成功",
 		"data": svcInfo,
 	})
 }
@@ -115,7 +115,7 @@ func (s *svc) DeleteService(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg":  "更新service成功",
+		"msg":  "删除service成功",
 		"data": nil,
 	})
 }
