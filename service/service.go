@@ -27,7 +27,7 @@ type Create struct {
 }
 
 // CreateService 创建service,,接收ServiceCreate对象
-func (s *service) CreateService(data *Create) (err error) {
+func (s *service) CreateService(data *Create) (err error, err2 error) {
 	//将data中的数据组装成corev1.Service对象
 	svc := &corev1.Service{
 		//ObjectMeta中定义资源名、命名空间以及标签
@@ -62,9 +62,9 @@ func (s *service) CreateService(data *Create) (err error) {
 		svc, metav1.CreateOptions{})
 	if err != nil {
 		fmt.Println("创建Service失败, ", err.Error())
-		return errors.New("创建Service失败, " + err.Error())
+		return errors.New("创建Service失败, " + err.Error()), err2
 	}
-	return nil
+	return nil, err2
 }
 
 // GetServices 获取列表

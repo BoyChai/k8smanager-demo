@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"k8smanager-demo/service"
-
 	"net/http"
 )
 
