@@ -216,3 +216,13 @@ func (s secretCell) GetCreation() time.Time {
 func (s secretCell) GetName() string {
 	return s.Name
 }
+
+// 定义persistentVolumeClaimCell类型，实现GetCreation和GetName方法后，可以进行类型转换
+type persistentVolumeClaimCell corev1.PersistentVolumeClaim
+
+func (p persistentVolumeClaimCell) GetCreation() time.Time {
+	return p.CreationTimestamp.Time
+}
+func (p persistentVolumeClaimCell) GetName() string {
+	return p.Name
+}
