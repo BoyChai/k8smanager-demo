@@ -62,5 +62,20 @@ func (r *router) InitApiRouter(router *gin.Engine) {
 		GET("/api/k8s/ingress/detail", Ingress.GetIngressDetail).
 		PUT("/api/k8s/ingress/create", Ingress.CreateIngress).
 		DELETE("/api/k8s/ingress/delete", Ingress.DeleteIngress).
-		PUT("/api/k8s/ingress/update", Ingress.UpdateIngress)
+		PUT("/api/k8s/ingress/update", Ingress.UpdateIngress).
+		// configmap
+		GET("/api/k8s/configmaps", ConfigMap.GetConfigMaps).
+		GET("/api/k8s/configmap/detail", ConfigMap.GetConfigMapDetail).
+		DELETE("/api/k8s/configmap/del", ConfigMap.DeleteConfigMap).
+		PUT("/api/k8s/configmap/update", ConfigMap.UpdateConfigMap).
+		//secret
+		GET("/api/k8s/secrets", Secret.GetSecrets).
+		GET("/api/k8s/secret/detail", Secret.GetSecretDetail).
+		DELETE("/api/k8s/secret/del", Secret.DeleteSecret).
+		PUT("/api/k8s/secret/update", Secret.UpdateSecret).
+		// pvc
+		GET("/api/k8s/persistentvolumeclaims", PersistentVolumeClaim.GetPersistentVolumeClaims).
+		GET("/api/k8s/persistentvolumeclaim/detail", PersistentVolumeClaim.GetPersistentVolumeClaimDetail).
+		DELETE("/api/k8s/persistentvolumeclaim/del", PersistentVolumeClaim.DeletePersistentVolumeClaim).
+		PUT("/api/k8s/persistentvolumeclaim/update", PersistentVolumeClaim.UpdatePersistentVolumeClaim)
 }
