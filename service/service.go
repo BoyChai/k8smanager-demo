@@ -15,8 +15,8 @@ var Service service
 type service struct {
 }
 
-// Create 定义Create结构体，用于创建service需要的参数属性的定义
-type Create struct {
+// ServiceCreate 定义Create结构体，用于创建service需要的参数属性的定义
+type ServiceCreate struct {
 	Name          string            `json:"name"`
 	Namespace     string            `json:"namespace"`
 	Type          string            `json:"type"`
@@ -27,7 +27,7 @@ type Create struct {
 }
 
 // CreateService 创建service,,接收ServiceCreate对象
-func (s *service) CreateService(data *Create) (err error, err2 error) {
+func (s *service) CreateService(data *ServiceCreate) (err error) {
 	//将data中的数据组装成corev1.Service对象
 	svc := &corev1.Service{
 		//ObjectMeta中定义资源名、命名空间以及标签
@@ -62,9 +62,9 @@ func (s *service) CreateService(data *Create) (err error, err2 error) {
 		svc, metav1.CreateOptions{})
 	if err != nil {
 		fmt.Println("创建Service失败, ", err.Error())
-		return errors.New("创建Service失败, " + err.Error()), err2
+		return errors.New("创建Service失败, " + err.Error())
 	}
-	return nil, err2
+	return nil
 }
 
 // GetServices 获取列表
