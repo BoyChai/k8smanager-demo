@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"k8smanager-demo/config"
 	"k8smanager-demo/controller"
+	"k8smanager-demo/dao"
 	"k8smanager-demo/db"
 	"k8smanager-demo/service"
 )
@@ -19,6 +20,8 @@ func main() {
 	// 跨包调用router的初始化方法
 	controller.Router.InitApiRouter(r)
 
+	data, _ := dao.Workflow.GetList("", 10, 1)
+	fmt.Println(data)
 	// 启动gin server
 	r.Run(config.ListenAddr)
 
