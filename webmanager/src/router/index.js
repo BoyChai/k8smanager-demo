@@ -16,6 +16,19 @@ const routes = [
         icon: 'odometer',
         meta: {title: "概要", requireAuth: true},
         component: () =>       import("@/views/home/Home.vue"),
+    },{
+        path: '/404',
+        name: '404',
+        meta: {title: "404"},
+        component: () =>       import("@/common/404.vue"),
+    },{
+        path: '/403',
+        name: '403',
+        meta: {title: "403"},
+        component: () =>       import("@/common/403.vue"),
+    },{
+        path: '/:pathMatch(.*)',
+        redirect:'/404',
     },
 ]
 //创建路由实例
