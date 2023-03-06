@@ -6,6 +6,7 @@ import (
 	"k8smanager-demo/controller"
 	"k8smanager-demo/middle"
 	"k8smanager-demo/service"
+	"net/http"
 )
 
 func main() {
@@ -20,6 +21,12 @@ func main() {
 	r.Use(middle.JWTAuth())
 	// 跨包调用router的初始化方法
 	controller.Router.InitApiRouter(r)
+	// websocket
+	go func() {
+		http.HandleFunc("/ws", service.Terminal.WsHandler)
+		http.ListenAndServe(":8081", nil)
+	}()
+
 	// 启动gin server
 	r.Run(config.ListenAddr)
 }

@@ -69,7 +69,7 @@ func (s *svc) GetServiceDetail(ctx *gin.Context) {
 // CreateService 创建Service
 func (s *svc) CreateService(ctx *gin.Context) {
 	var (
-		svcCreate = new(service.Create)
+		svcCreate = new(service.ServiceCreate)
 		err       error
 	)
 	// form格式使用bind方法绑传入的参数
@@ -79,7 +79,7 @@ func (s *svc) CreateService(ctx *gin.Context) {
 			"data": nil,
 		})
 	}
-	svcInfo, err := service.Service.CreateService(svcCreate)
+	err = service.Service.CreateService(svcCreate)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"msg":  err.Error(),
@@ -89,7 +89,7 @@ func (s *svc) CreateService(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg":  "创建service成功",
-		"data": svcInfo,
+		"data": nil,
 	})
 }
 
