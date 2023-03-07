@@ -11,12 +11,55 @@ NProgress.configure({ easing: 'ease', speed: 600, showSpinner: false })
 
 const routes = [
     {
-        path: '/home',
-        name: '概要',
-        icon: 'odometer',
-        meta: {title: "概要", requireAuth: true},
-        component: () =>       import("@/views/home/Home.vue"),
-    },{
+        path: '/',
+        redirect: '/home',
+    },
+    {
+        path: '/home', //视图
+        component: import('@/layout/Layout.vue'),
+        icon: "odometer", //图标
+        meta: {title:"概要", requireAuth: false}, //定义meta元数据
+        children: [
+            {
+                path: '/home', //视图
+                name: '概要',
+                component: () => import('@/views/home/Home.vue'), //视图组件
+                icon: "odometer", //图标
+                meta: {title:"概要", requireAuth: false}, //定义meta元数据
+            }
+        ]
+    },
+    {
+        path: '/workload',
+        name: '工作负载',
+        component: import('@/layout/Layout.vue'),
+        icon: 'menu',
+        meta: {title: '工作负载', requireAuth: true},
+        children: [
+            {
+                path: '/workload/deployment',
+                name: 'Deployment',
+                icon: 'el-icon-s-data',
+                meta: {title: 'Deployment', requireAuth: true},
+                // component: () => import('@/views/deployment/Deployment.vue')
+            },
+            {
+                path: '/workload/pod',
+                name: 'Pod',
+                icon: 'el-icon-document-add',
+                meta: {title: 'Pod', requireAuth: true},
+                // component: () => import('@/views/pod/Pod.vue')
+            },
+            {
+                path: '/workload/daemonset',
+                name: 'DaemonSet',
+                icon: 'el-icon-document-add',
+                meta: {title: 'DaemonSet', requireAuth: true},
+                // component: () => import('@/views/daemonset/DaemonSet.vue')
+            }
+        ]
+    },
+   {
         path: '/404',
         name: '404',
         meta: {title: "404"},
@@ -26,7 +69,8 @@ const routes = [
         name: '403',
         meta: {title: "403"},
         component: () =>       import("@/common/403.vue"),
-    },{
+    },
+    {
         path: '/:pathMatch(.*)',
         redirect:'/404',
     },
