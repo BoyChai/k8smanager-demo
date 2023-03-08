@@ -7,7 +7,7 @@
         <el-affix class="aside-logo">
           <el-image class="logo-image" :src="logo" />
           <span :class="[isCollapse?'is-collapse':'']">
-            <span class="logo-name">Kubernetes</span>
+            <span class="logo-name" v-if="!isCollapse">Kubernetes</span>
           </span>
         </el-affix>
 <!--        定义vue router模式，跟路由规则中的path绑定-->
@@ -32,9 +32,10 @@
 <!--            第二种情况，路由规则children大于1个的菜单栏-->
             <el-sub-menu class="aside-submenu" v-else-if="menu.children && menu.children.length > 1" :index="menu.path">
 <!--              处理父菜单栏-->
-                  <template #title>
-                    <el-icon><component :is="menu.icon"></component></el-icon>
-                    {{menu.name}}
+              <template #title>
+                <el-icon><component :is="menu.icon"></component></el-icon>
+                <span :class="[isCollapse?'is-collapse':'']">{{menu.name}}</span>
+<!--                    <span v-if="!isCollapse">{{menu.name}}</span>-->
                   </template>
 <!--              处理子菜单栏-->
               <el-menu-item class="aside-childitem" v-for="child in menu.children" :key="child" :index="child.path">
@@ -51,13 +52,28 @@
         <el-header class="header">
           <el-row :gutter="20">
 <!--            折叠按钮-->
-            <el-col>
+            <el-col :span="1">
               <div class="header-collapse">
 <!--                通过isCollapse来控制状态-->
                 <el-icon @click="onCollapse"><component :is="isCollapse?'expand':'fold'"></component></el-icon>
               </div>
             </el-col>
 <!--            面包屑-->
+            <el-col :span="10">
+              <div class="header-breadcrumb">
+                <el-breadcrumb separator="/">
+<!--                 最外层的工作台 写死的-->
+                  <el-breadcrumb-item :to="{path:'/'}">工作台</el-breadcrumb-item>
+<!--                  循环出路径的面包屑-->
+                  <template v-for="(matched,m) in this.$route.matched" :key="m">
+                    <el-breadcrumb-item v-if="matched.name != undefined">
+                      {{matched.name}}
+                    </el-breadcrumb-item>
+                  </template>
+                </el-breadcrumb>
+              </div>
+            </el-col>
+<!--            用户信息-->
             <el-col></el-col>
           </el-row>
         </el-header>
@@ -90,8 +106,10 @@ export default {
       console.log(this.asideWidth)
       // true为折叠状态
       if (!this.isCollapse){
+        // 缩减
         this.asideWidth='64px'
       } else {
+        // 展开
         this.asideWidth='220px'
       }
       this.isCollapse = !this.isCollapse
@@ -134,6 +152,7 @@ export default {
   .aside-menu{
     border-right-width: 0;
   }
+
 /*  菜单栏背景色*/
   .aside-menu-item.is-active{
     background-color: #1f2a3a;
@@ -154,5 +173,12 @@ export default {
   line-height: 60px;
   font-size: 24px;
   box-shadow: 0 2px 4px rgba(0,0,0 ,.12),0 0 6px rgba(0,0,0,.04);
+}
+.header-collapse{
+  cursor: pointer;
+}
+/* 面包屑 */
+.header-breadcrumb{
+  padding-top: 0.9em;
 }
 </style>
