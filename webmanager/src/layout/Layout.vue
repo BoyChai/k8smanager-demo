@@ -37,7 +37,7 @@
                     {{menu.name}}
                   </template>
 <!--              处理子菜单栏-->
-              <el-menu-item class="aside-childitem" v-for="child in menu.children" :key="child">
+              <el-menu-item class="aside-childitem" v-for="child in menu.children" :key="child" :index="child.path">
                 <template #title>
                   {{child.name}}
                 </template>
@@ -48,7 +48,19 @@
       </el-aside>
 <!--      -->
       <el-container>
-        <el-header>header</el-header>
+        <el-header class="header">
+          <el-row :gutter="20">
+<!--            折叠按钮-->
+            <el-col>
+              <div class="header-collapse">
+<!--                通过isCollapse来控制状态-->
+                <el-icon @click="onCollapse"><component :is="isCollapse?'expand':'fold'"></component></el-icon>
+              </div>
+            </el-col>
+<!--            面包屑-->
+            <el-col></el-col>
+          </el-row>
+        </el-header>
         <el-main>main</el-main>
         <el-footer>footer</el-footer>
       </el-container>
@@ -73,6 +85,18 @@ export default {
     //  拿到router对象
     this.routers = useRouter().options.routes
   },
+  methods: {
+    onCollapse() {
+      console.log(this.asideWidth)
+      // true为折叠状态
+      if (!this.isCollapse){
+        this.asideWidth='64px'
+      } else {
+        this.asideWidth='220px'
+      }
+      this.isCollapse = !this.isCollapse
+    }
+  }
 
 }
 </script>
@@ -99,10 +123,36 @@ export default {
     font-weight: bold;
     padding:10px;
   }
-
   .is-collapse{
     display: none;
   }
+  /*清除滚动轴*/
+  .aside::-webkit-scrollbar{
+    display: none;
+  }
+  /*清除边框左右宽度*/
+  .aside-menu{
+    border-right-width: 0;
+  }
+/*  菜单栏背景色*/
+  .aside-menu-item.is-active{
+    background-color: #1f2a3a;
+  }
+  .aside-menu-item:hover{
+    background-color: #142c4e;
+  }
 
-
+  .aside-childitem.is-active {
+    background-color: #1f2a3a;
+  }
+  .aside-childitem:hover{
+    background-color: #142c4e;
+  }
+/*  header的css属性*/
+.header{
+  z-index: 1200;
+  line-height: 60px;
+  font-size: 24px;
+  box-shadow: 0 2px 4px rgba(0,0,0 ,.12),0 0 6px rgba(0,0,0,.04);
+}
 </style>

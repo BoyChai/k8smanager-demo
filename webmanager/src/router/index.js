@@ -41,21 +41,21 @@ const routes = [
                 name: 'Deployment',
                 icon: 'el-icon-s-data',
                 meta: {title: 'Deployment', requireAuth: true},
-                // component: () => import('@/views/deployment/Deployment.vue')
+                component: () => import('@/views/deployment/Deployment.vue')
             },
             {
                 path: '/workload/pod',
                 name: 'Pod',
                 icon: 'el-icon-document-add',
                 meta: {title: 'Pod', requireAuth: true},
-                // component: () => import('@/views/pod/Pod.vue')
+                component: () => import('@/views/pod/Pod.vue')
             },
             {
                 path: '/workload/daemonset',
                 name: 'DaemonSet',
                 icon: 'el-icon-document-add',
                 meta: {title: 'DaemonSet', requireAuth: true},
-                // component: () => import('@/views/daemonset/DaemonSet.vue')
+                component: () => import('@/views/daemonset/DaemonSet.vue')
             }
         ]
     },
