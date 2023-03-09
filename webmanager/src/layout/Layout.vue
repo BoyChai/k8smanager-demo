@@ -74,7 +74,25 @@
               </div>
             </el-col>
 <!--            用户信息-->
-            <el-col></el-col>
+            <el-col :span="13">
+              <div class="header-user">
+              <el-dropdown>
+                <!--              用户头像和用户木-->
+                <span>
+                  <el-image class="avator-image" :src="avator"></el-image>
+                  {{username}}
+                </span>
+                <!--                下拉框内容-->
+                <template #dropdown>
+                  <el-dropdown-menu>
+<!--                    未定义退出和修改密码的click-->
+                    <el-dropdown-item @click="logdebug()">退出</el-dropdown-item>
+                    <el-dropdown-item>修改密码</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+              </div>
+            </el-col>
           </el-row>
         </el-header>
         <el-main>main</el-main>
@@ -94,14 +112,28 @@ export default {
       logo:require('@/assets/img/k8s-metrics.png'),
       asideWidth:'220px',
       isCollapse:false,
-      routers: []
+      routers: [],
+      avator: require('@/assets/img/avator.png'),
+      username: "未定义"
     }
   },
+  // 计算属性
+  // computed: {
+  //   username() {
+  //     // https://www.runoob.com/jsref/prop-win-localstorage.html
+  //     let username = localStorage.getItem('username')
+  //     return username?username:'未定义'
+  //   }
+  // },
   beforeMount() {
     //  拿到router对象
     this.routers = useRouter().options.routes
   },
   methods: {
+    // debug
+    logdebug() {
+      console.log(this.username)
+    },
     onCollapse() {
       console.log(this.asideWidth)
       // true为折叠状态
@@ -181,4 +213,16 @@ export default {
 .header-breadcrumb{
   padding-top: 0.9em;
 }
+.avator-image {
+  top: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+ }
+.header-user {
+  text-align: right;
+  margin-right: 50px;
+  cursor: pointer;
+}
+
 </style>
