@@ -1,10 +1,17 @@
 <template>
-
+  <div>
+    我是Pod.vue
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Pod"
+  name: "Pod",
+  data() {
+    return{
+      isCollapse: true
+    }
+  }
 }
 </script>
 

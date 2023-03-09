@@ -95,8 +95,15 @@
             </el-col>
           </el-row>
         </el-header>
-        <el-main>main</el-main>
-        <el-footer>footer</el-footer>
+        <el-main class="main">
+          <router-view></router-view>
+        </el-main>
+        <el-footer class="footer">
+          <el-icon style="width: 2em;top:3px;font-size: 18px"><place /></el-icon>
+          <a class="footer el-icon-place">2023 BoyChai devops</a>
+        </el-footer>
+<!--        返回顶部，其实就是返回el-main的顶部-->
+        <el-backtop target=".el-main"></el-backtop>
       </el-container>
     </el-container>
   </div>
@@ -223,6 +230,16 @@ export default {
   text-align: right;
   margin-right: 50px;
   cursor: pointer;
+}
+.main {
+  padding:10px;
+}
+.footer{
+  z-index: 1200;
+  color: rgb(187,184,184);
+  font-size: 14px;
+  text-align: center;
+  line-height: 60px;
 }
 
 </style>

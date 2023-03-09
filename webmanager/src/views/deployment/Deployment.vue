@@ -1,5 +1,7 @@
 <template>
-
+  <div>
+    我是Deployment.vue
+  </div>
 </template>
 
 <script>

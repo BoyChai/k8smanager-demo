@@ -1,5 +1,7 @@
 <template>
-
+  <div>
+    我是DaemonSet.vue
+  </div>
 </template>
 
 <script>
