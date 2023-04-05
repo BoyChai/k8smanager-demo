@@ -77,22 +77,23 @@ func (d *deployment) CreateDeployment(ctx *gin.Context) {
 		err          error
 	)
 	if err = ctx.ShouldBindJSON(deployCreate); err != nil {
+		fmt.Println("1")
 		fmt.Println("Bind请求参数失败, " + err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"msg":  err.Error(),
 			"data": nil,
 		})
-		if err = service.Deployment.CreateDeployment(deployCreate); err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"msg":  err.Error(),
-				"data": nil,
-			})
-		}
-		ctx.JSON(http.StatusOK, gin.H{
-			"msg":  "创建Deployment成功",
+	}
+	if err = service.Deployment.CreateDeployment(deployCreate); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"msg":  err.Error(),
 			"data": nil,
 		})
 	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg":  "创建Deployment成功",
+		"data": nil,
+	})
 }
 
 func (d *deployment) ScaleDeployment(ctx *gin.Context) {
