@@ -245,6 +245,9 @@ export default {
         })
       })
     },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    },
     // 创建deployment
     submiForm(formName) {
       this.$refs[formName].validate((valid)=> {
@@ -257,14 +260,54 @@ export default {
     },
     createDeployFunc() {
       // 正则匹配验证label
-      let reg = new Regexp("(^[A-Za-z]+=[A-Za-z0-9]+).*")
-      // 负载均衡资源54.13
+      let reg = new RegExp("(^[A-Za-z]+=[A-Za-z0-9]+).*")
+      if (!reg.test(this.createDeployment.label_str)) {
+        this.$message.warning({
+          message: "标签填写异常，请确认后重新填写"
+        })
+        return
+      }
+      this.fullscreenLoading = true;
 
       // 处理label,cpu和内存
-
+      let label = new Map()
+      let cpu,memory
+      //将label字符串转成数组
+      let a = (this.createDeployment.label_str).split(',')
+      //将数组转成map
+      a.forEach(item => {
+        let b = item.split('=')
+        label[b[0]] = b[1]
+      })
+      //将deployment的规格转成cpu和memory
+      let resourceList = this.createDeployment.resource.split("/")
+      cpu = resourceList[0]
+      memory = resourceList[1] + "Gi"
       // 赋值
+      this.createDeploymentData.params = this.createDeployment
+      this.createDeploymentData.params.container_port = parseInt(this.createDeployment.container_port)
+      this.createDeploymentData.params.label = label
+      this.createDeploymentData.params.cpu = cpu
+      this.createDeploymentData.params.memory = memory
 
       // 发起请求
+      httpClient.post(this.createDeploymentData.url, this.createDeploymentData.params)
+          .then(res => {
+            this.$message.success({
+              message: res.msg
+            })
+            //创建后重新获取列表
+            this.getDeployments()
+          })
+          .catch(res => {
+            this.$message.error({
+              message: res.msg,
+            })
+          })
+      // 重置表单
+      this.resetForm('createDeployment')
+      this.fullscreenLoading = false
+      this.createDeploymentDrawer = false
     },
   },
   watch: {
