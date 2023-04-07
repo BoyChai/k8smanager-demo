@@ -24,7 +24,7 @@
               <!--              刷新按钮-->
               <el-col :span="2" :offset="16">
                 <dev>
-                  <el-button style="border-radius:2px" icon="Refresh" plain>刷新</el-button>
+                  <el-button style="border-radius:2px" @click=getDeployments icon="Refresh" plain>刷新</el-button>
                 </dev>
               </el-col>
               <el-col>
@@ -57,7 +57,7 @@
                 <div>
                   <el-input class="deploy-head-search" clearable placeholder="请输入" v-model="searchInput"></el-input>
                   <el-button style="border-radius:2px;"
-                    icon="Search" type="primary">
+                    icon="Search" type="primary" @click=getDeployments>
                     搜索
                   </el-button>
                 </div>
@@ -68,7 +68,32 @@
         </div>
       </el-col>
       <!-- 数据表格 -->
-      <el-col :span="24"></el-col>
+      <el-col :span="24">
+        <div>
+          <el-card class="deploy-body-card" shadow="never" :body-style="{padding:'5px'}">
+            <el-table style="width: 100%;font-size: 12px;margin-bottom: 10px;"
+            :data="deploymentList" >
+              <el-table-column width="20"></el-table-column>
+              <el-table-column align=left label="Deployment名">
+                <template v-slot="scope">
+                  <a class="deploy-body-deployname">{{ scope.row.metadata.name }}</a>
+                </template>
+              </el-table-column>
+              <el-table-column align=left label="标签">
+                <template v-slot="scope">
+                  <div v-for="(val,key) in scope.row.metadata.labels" :key="key">
+                    <el-popover placement="rignt" :width="200" trigger="hover" :content="key+':'+val">
+                      <template #reference>
+                        <el-tag style="margin-bottom: 5px;" type="warning">{{ ellipsis(key+':'+val) }}</el-tag>
+                      </template>
+                    </el-popover>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-card>
+        </div>
+      </el-col>
     </el-row>
     <!--  https://element-plus.org/zh-CN/component/drawer.html  -->
     <el-drawer
@@ -222,10 +247,30 @@ export default {
           trigger: 'change'
         }],
       },
+      // 列表
+      deploymentList: [],
+      apploading: false,
+      deploymentTotal: 0,
+      getDeploymentData:{
+        url:common.k8sDeploymentList,
+        params:{
+          filter_name:'',
+          namespace: '',
+          page: 1,
+          limit: 10,
+        },
+      },
+      // 分页
+      currentPage: 1,
+      pagesize: 10,
+      pagesizeList: [10,20,30],
     }
   },
   methods: {
-
+    // 字符串截取
+    ellipsis(value) {
+      return value.length > 15 ? value.substring(0,15) + '...':value
+    },
     // 处理抽屉的关闭，double check增加体验
     handleClose(done) {
       this.$confirm('确认关闭')
@@ -309,6 +354,26 @@ export default {
       this.fullscreenLoading = false
       this.createDeploymentDrawer = false
     },
+    // 获取deployment列表
+    getDeployments() {
+      this.apploading=true
+      this.getDeploymentData.params.filter_name = this.searchInput
+      this.getDeploymentData.params.namespace = this.namespaceValue
+      this.getDeploymentData.params.page = this.currentPage
+      this.getDeploymentData.params.limit = this.pagesize
+      httpClient.get(this.getDeploymentData.url,{params:this.getDeploymentData.params})
+          .then(res => {
+            this.deploymentList = res.data.items
+            this.deploymentTotal = res.data.total
+          })
+          .catch(res => {
+            this.$message.error({
+              message: res.msg
+            })
+          })
+      this.apploading = false
+
+    },
   },
   watch: {
     // 监听namespace的值,若发生变化，则执行handler方法中的内容
@@ -316,7 +381,9 @@ export default {
       handler() {
         // 将namespace的值存入本地，用于path切换时依旧能获取到
         localStorage.setItem('namespace',this.namespaceValue)
+        this.currentPage = 1;
         // console.log(this.namespaceValue)
+        this.getDeployments()
       }
     }
   },
@@ -326,6 +393,7 @@ export default {
       this.namespaceValue=localStorage.getItem('namespace')
     }
     this.getNamespaces()
+    this.getDeployments()
   },
 }
 </script>
